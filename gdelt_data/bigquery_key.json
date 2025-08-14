@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "my-project-2025-466706",
+  "private_key_id": "2bceb63f05917e0d39f6f98f10018ef1aa801d88",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQCuX9W8iTn6zST1\nB/Il9p/CB3WutcbJx6JxgymIWHpLoVx+F7zIhzwfp/OKN4NJrUIdKp9300C42GBH\nPybiDHpW5VWfNlKE2plVqAtS9Xn3zOTry/K//DGhLCw/oT5bv0MFZj9YnncnDREE\ngVLCQhw0R3+NdxzfvHRweRLwo1PimbMaUC7UfIEcuuf2ooAYO5eauYgvbCzGaZvQ\nqJZ04vNoQ3Zqbw43tBcDLU2ou4sCgcM9wjQGbyS77igGarW80QRI3Z1G8qv0Aq5f\n0tSL08trSPkVarAasqKRwSe2VNFANWgJ8YhqnFwwesvOgchF6m+oKHOyLottJbYr\nuh9Ssh3PAgMBAAECggEABXJK28Oxgurrb5fa8WKdpNLU0yssVVsd8Mu2/WI+F6Sn\nneyh4eWPdDGrwrJvMFrwCLcvGfAIQn3HrBIF5eOb4qDxJrLsquelCG7iQ6oVMC8/\nKzpIj8SRzEXz79zadMUpk76Y1ezFLfwTfv+HFTg5Z0ygaEvDJB3fyS+O7uM7GIXF\nM62ZPZxrZVtuJOMzNTsO1xjuCP4A0Y529silYI0u2Car/tpwii4O1XHZruEOqGJn\nHREkuI5hIkNoej5b7ubKmfIq3F7SxL5D40Y4rscwytWpTmXK94jFxKAonQIoRTr7\naRA9OEFO1ZN5TefENBsT83tKoQOW09fwFYF36+IyGQKBgQDqymRHjgW9z0PXQJLS\nHU2EaB9pqPE7K1FEBjrJqou/xxBbPkA0sKwaoKire8lzysqo2IN3BgVJHVUwhE41\nztdA9nepJENi9+67eyve1rAi3A+Y1uFhZRjj/Q/v8MqNDc0mdEpctvXUrPQkzMMf\nfzpWRjakiYgQj3fBMKRyNG1nVQKBgQC+IExV7ZaHDRSUXFl0JerwiUxQjzrPpPCC\nJ8XyqMEUMpTCsFFxRizAivPL+tQiSveShTqDQs7yLNln20zgUa8J45+BgyVzTz1D\n3YKSiMIqHpzIKaOGUhWkZK2Pqy5Px3LOZcxnS0iY6WmHMaJhweZ+XKlikUyUsxAj\nkrbzm9CokwKBgQCLTByGn2oknK1hLbxt0FjHL4dDhqnoMuD5/MAwGXDkDNRVbe9l\n01OoUJ0BcGWqvyvRVPNaUEYehLqgGD7WiasHrbJ8tTkNpI8MyBzVDoZdiDXwtbvt\nrq8/xEoKTs+9M+z83Y2oyBu9XAdVNe6l5zPTL8EHiVkiihvAkH1gDF7EKQKBgQCt\nCTwwYGHFXBREyp/nY7MlY+/+ybyeyuDRtF0l8ox3U2msn0ggLdwBCPXFye1ToKMd\nyP9uA1nRcxwSt7aJ2g3SlEXRW4i0H4QExg9WSf1c1CugyLS5RO/JhI+p2AP4O++z\nBVc5E31pHdYbYwMEsbKTgsXunYrzMt0XYyn7IO6Q3QKBgQDp3+BERiOQMw8n9wpI\nDb1Bknm6WjBxhwUMWMaJ86YsvOwiYD731Ewv6lyw4sWsluySsQ0fCMAJJt7cZO+0\nX8gEOedE4frunh1z6QDttIk2aPbXpLltEO1M3wc7XidFisMrYp2jG6FsSRQaSkol\nLZ6DFNhm6o7Q3wlwHhJZw8ZBHg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "forex-bigquery@my-project-2025-466706.iam.gserviceaccount.com",
+  "client_id": "104235810471004005243",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/forex-bigquery%40my-project-2025-466706.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

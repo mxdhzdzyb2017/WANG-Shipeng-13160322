@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="manual_data_title">手动输入历史数据</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 5px;
+        }
+        .lang-btn {
+            padding: 5px 15px;
+            border: 1px solid #ddd;
+            background: white;
+            color: #333;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        .lang-btn:hover {
+            background: #f0f0f0;
+        }
+        .lang-btn.active {
+            background: #007AFF;
+            color: white;
+            border-color: #007AFF;
+        }
+        .date-selector {
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        .input-section {
+            margin-bottom: 30px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 4px;
+        }
+        .input-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        input[type="number"], input[type="date"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .data-display {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 语言切换按钮 -->
+        <div class="language-switcher">
+            <button onclick="setLanguage('zh')" class="lang-btn" id="zh-btn">中文</button>
+            <button onclick="setLanguage('en')" class="lang-btn" id="en-btn">English</button>
+        </div>
+        
+        <h1 data-i18n="manual_data_title">手动输入历史数据</h1>
+        
+        <div class="date-selector">
+            <label for="dataDate" data-i18n="select_date">选择日期：</label>
+            <input type="date" id="dataDate" value="">
+            <button onclick="loadDataForDate()" data-i18n="load_date_data">加载该日期数据</button>
+            <button onclick="window.location.href='index.html'" data-i18n="back_to_home">返回主页</button>
+        </div>
+
+        <div id="messageDiv"></div>
+
+        <form id="dataForm">
+            <!-- 汇率数据 -->
+            <div class="input-section">
+                <h2 data-i18n="forex_data">汇率数据</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="usd_cny">USD/CNY</label>
+                        <input type="number" id="usd_cny" step="0.0001" placeholder="例如: 7.2345" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="usd_gbp">USD/GBP</label>
+                        <input type="number" id="usd_gbp" step="0.0001" placeholder="例如: 0.7890" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="cny_usd">CNY/USD</label>
+                        <input type="number" id="cny_usd" step="0.0001" placeholder="例如: 0.1382" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="gbp_cny">GBP/CNY</label>
+                        <input type="number" id="gbp_cny" step="0.0001" placeholder="例如: 9.1567" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="gbp_usd">GBP/USD</label>
+                        <input type="number" id="gbp_usd" step="0.0001" placeholder="例如: 1.2678" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="cny_gbp">CNY/GBP</label>
+                        <input type="number" id="cny_gbp" step="0.0001" placeholder="例如: 0.1092" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 国债数据 -->
+            <div class="input-section">
+                <h2 data-i18n="bond_data">国债收益率数据 (%)</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="bond_cn" data-i18n="china_bond">中国国债</label>
+                        <input type="number" id="bond_cn" step="0.01" placeholder="例如: 2.85" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="bond_us" data-i18n="us_bond">美国国债</label>
+                        <input type="number" id="bond_us" step="0.01" placeholder="例如: 4.25" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="bond_uk" data-i18n="uk_bond">英国国债</label>
+                        <input type="number" id="bond_uk" step="0.01" placeholder="例如: 4.15" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 新闻数据 -->
+            <div class="input-section">
+                <h2 data-i18n="news_data">新闻数据</h2>
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="news_cn_count" data-i18n="china_news_count">中国新闻数量</label>
+                        <input type="number" id="news_cn_count" min="0" placeholder="例如: 150" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="news_cn_tone" data-i18n="china_news_tone">中国新闻情绪</label>
+                        <input type="number" id="news_cn_tone" step="0.1" placeholder="例如: 0.5" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="news_us_count" data-i18n="us_news_count">美国新闻数量</label>
+                        <input type="number" id="news_us_count" min="0" placeholder="例如: 200" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="news_us_tone" data-i18n="us_news_tone">美国新闻情绪</label>
+                        <input type="number" id="news_us_tone" step="0.1" placeholder="例如: -0.3" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="news_uk_count" data-i18n="uk_news_count">英国新闻数量</label>
+                        <input type="number" id="news_uk_count" min="0" placeholder="例如: 100" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="news_uk_tone" data-i18n="uk_news_tone">英国新闻情绪</label>
+                        <input type="number" id="news_uk_tone" step="0.1" placeholder="例如: 0.2" required>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" data-i18n="save_data">保存数据</button>
+            <button type="button" onclick="showExistingDates()" data-i18n="view_existing">查看已有数据日期</button>
+        </form>
+
+        <div id="dataDisplay" class="data-display" style="display:none;">
+            <h3 data-i18n="existing_dates">已有数据日期</h3>
+            <div id="existingDates"></div>
+        </div>
+    </div>
+
+    <script src="i18n.js"></script>
+    <script>
+        const API_BASE = 'http://localhost:5001/api';
+        
+        // 设置默认日期为昨天
+        document.getElementById('dataDate').value = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+        
+        // 表单提交
+        document.getElementById('dataForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const date = document.getElementById('dataDate').value;
+            if (!date) {
+                showMessage(t('please_select_date'), 'error');
+                return;
+            }
+            
+            const data = {
+                date: date,
+                forex: {
+                    USD_CNY: parseFloat(document.getElementById('usd_cny').value),
+                    USD_GBP: parseFloat(document.getElementById('usd_gbp').value),
+                    CNY_USD: parseFloat(document.getElementById('cny_usd').value),
+                    GBP_CNY: parseFloat(document.getElementById('gbp_cny').value),
+                    GBP_USD: parseFloat(document.getElementById('gbp_usd').value),
+                    CNY_GBP: parseFloat(document.getElementById('cny_gbp').value)
+                },
+                bonds: {
+                    CN: parseFloat(document.getElementById('bond_cn').value),
+                    US: parseFloat(document.getElementById('bond_us').value),
+                    UK: parseFloat(document.getElementById('bond_uk').value)
+                },
+                news: {
+                    CN: {
+                        count: parseInt(document.getElementById('news_cn_count').value),
+                        tone: parseFloat(document.getElementById('news_cn_tone').value)
+                    },
+                    US: {
+                        count: parseInt(document.getElementById('news_us_count').value),
+                        tone: parseFloat(document.getElementById('news_us_tone').value)
+                    },
+                    UK: {
+                        count: parseInt(document.getElementById('news_uk_count').value),
+                        tone: parseFloat(document.getElementById('news_uk_tone').value)
+                    }
+                }
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/add-historical-data`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showMessage(t('data_save_success'), 'success');
+                    // 清空表单
+                    document.getElementById('dataForm').reset();
+                    // 日期加1
+                    const nextDate = new Date(date);
+                    nextDate.setDate(nextDate.getDate() + 1);
+                    document.getElementById('dataDate').value = nextDate.toISOString().split('T')[0];
+                } else {
+                    showMessage(t('save_failed') + '：' + (result.error || '未知错误'), 'error');
+                }
+            } catch (error) {
+                showMessage(t('save_failed') + '：' + error.message, 'error');
+            }
+        });
+        
+        // 加载特定日期的数据
+        async function loadDataForDate() {
+            const date = document.getElementById('dataDate').value;
+            if (!date) {
+                showMessage(t('please_select_date'), 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/get-historical-data?date=${date}`);
+                const data = await response.json();
+                
+                if (data.exists) {
+                    // 填充表单
+                    if (data.forex) {
+                        Object.keys(data.forex).forEach(pair => {
+                            const input = document.getElementById(pair.toLowerCase());
+                            if (input) input.value = data.forex[pair];
+                        });
+                    }
+                    if (data.bonds) {
+                        document.getElementById('bond_cn').value = data.bonds.CN || '';
+                        document.getElementById('bond_us').value = data.bonds.US || '';
+                        document.getElementById('bond_uk').value = data.bonds.UK || '';
+                    }
+                    if (data.news) {
+                        Object.keys(data.news).forEach(country => {
+                            document.getElementById(`news_${country.toLowerCase()}_count`).value = data.news[country].count || '';
+                            document.getElementById(`news_${country.toLowerCase()}_tone`).value = data.news[country].tone || '';
+                        });
+                    }
+                    showMessage(t('data_load_success'), 'success');
+                } else {
+                    showMessage(t('no_data_for_date'), 'error');
+                }
+            } catch (error) {
+                showMessage(t('load_failed') + '：' + error.message, 'error');
+            }
+        }
+        
+        // 显示已有数据的日期
+        async function showExistingDates() {
+            try {
+                const response = await fetch(`${API_BASE}/get-data-dates`);
+                const dates = await response.json();
+                
+                const displayDiv = document.getElementById('dataDisplay');
+                const datesDiv = document.getElementById('existingDates');
+                
+                if (dates.length > 0) {
+                    datesDiv.innerHTML = `
+                        <p>${t('total_days')} ${dates.length} ${t('days_of_data')}</p>
+                        <table>
+                            <tr>
+                                <th>${t('select_date').replace(':', '')}</th>
+                                <th>${t('data_completeness')}</th>
+                            </tr>
+                            ${dates.map(d => `
+                                <tr>
+                                    <td>${d.date}</td>
+                                    <td>${d.complete ? '✅ ' + t('complete') : '⚠️ ' + t('incomplete')}</td>
+                                </tr>
+                            `).join('')}
+                        </table>
+                    `;
+                } else {
+                    datesDiv.innerHTML = `<p>${t('no_data_yet')}</p>`;
+                }
+                
+                displayDiv.style.display = 'block';
+            } catch (error) {
+                showMessage(t('get_dates_failed') + '：' + error.message, 'error');
+            }
+        }
+        
+        function showMessage(message, type) {
+            const messageDiv = document.getElementById('messageDiv');
+            messageDiv.className = type;
+            messageDiv.textContent = message;
+            setTimeout(() => {
+                messageDiv.textContent = '';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

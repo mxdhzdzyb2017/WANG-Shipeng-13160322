@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外汇市场量化交易项目 | Forex Quantitative Trading Project</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 交易设置样式 */
+        .trading-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .trading-section h2 {
+            color: white;
+            border-bottom-color: rgba(255,255,255,0.3);
+        }
+        
+        .trading-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .trading-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .trading-input-group label {
+            font-weight: bold;
+        }
+        
+        .trading-input-group input {
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .trading-input-group input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+        
+        .allocation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        
+        .allocation-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .allocation-item.low-accuracy {
+            opacity: 0.6;
+            background: rgba(255,0,0,0.1);
+        }
+        
+        .allocation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .accuracy-badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .accuracy-badge.good {
+            background: #4ecdc4;
+            color: white;
+        }
+        
+        .accuracy-badge.medium {
+            background: #ffc107;
+            color: white;
+        }
+        
+        .accuracy-badge.poor {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .warning-text {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        
+        .allocation-hint {
+            color: rgba(255,255,255,0.8);
+            font-size: 14px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 4px;
+        }
+        
+        .allocation-item input {
+            width: 60px;
+            text-align: center;
+        }
+        
+        .reverse-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        
+        .reverse-btn.active {
+            background: #4ecdc4;
+        }
+        
+        .auto-trade-controls {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 28px;
+            margin-left: 10px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 28px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #4ecdc4;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(32px);
+        }
+        
+        .performance-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .stat-card h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .trade-history {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0,0,0,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .trade-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .trade-item.buy {
+            border-left: 3px solid #4ecdc4;
+        }
+        
+        .trade-item.sell {
+            border-left: 3px solid #ff6b6b;
+        }
+        
+        .currency-holdings {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        
+        .currency-holdings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .currency-holding-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .currency-holding-item .currency-name {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .currency-holding-item .currency-amount {
+            display: block;
+            font-size: 20px;
+            color: #4ecdc4;
+        }
+        
+        .reversed-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+        }
+        
+        .accuracy-info {
+            color: #4ecdc4;
+            font-weight: bold;
+        }
+        
+        #baseCurrency {
+            padding: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            width: 100%;
+        }
+        
+        #baseCurrency option {
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 语言切换按钮 -->
+        <div class="language-switcher">
+            <button onclick="setLanguage('zh')" class="lang-btn" id="zh-btn">中文</button>
+            <button onclick="setLanguage('en')" class="lang-btn" id="en-btn">English</button>
+        </div>
+        
+        <h1 data-i18n="title">外汇市场量化交易项目</h1>
+        
+        <!-- 系统状态 -->
+        <div class="section status-section">
+            <h2 data-i18n="system_status">系统状态</h2>
+            <div id="systemStatus">
+                <p data-i18n="connecting">正在连接服务器...</p>
+            </div>
+        </div>
+        
+        <!-- 交易设置部分 -->
+        <div class="section trading-section">
+            <h2 data-i18n="trading_settings">交易设置</h2>
+            
+            <div class="trading-controls">
+                <div class="trading-input-group">
+                    <label data-i18n="base_currency">基础货币</label>
+                    <select id="baseCurrency">
+                        <option value="USD">USD (美元)</option>
+                        <option value="CNY">CNY (人民币)</option>
+                        <option value="GBP">GBP (英镑)</option>
+                    </select>
+                </div>
+                <div class="trading-input-group">
+                    <label data-i18n="initial_balance">初始资金</label>
+                    <input type="number" id="initialBalance" value="10000" min="100" step="100">
+                </div>
+            </div>
+            
+            <h3 data-i18n="currency_holdings">货币持有量</h3>
+            <div class="currency-holdings" id="currencyHoldings">
+                <!-- 动态生成 -->
+            </div>
+            
+            <h3 data-i18n="allocation_settings">交易策略设置 (%)</h3>
+            <p class="allocation-hint" data-i18n="allocation_hint">根据模型准确率自动调整交易金额，准确率低于50%的货币对不进行交易</p>
+            <div class="allocation-grid" id="allocationGrid">
+                <!-- 动态生成 -->
+            </div>
+            
+            <div class="auto-trade-controls">
+                <label>
+                    <span data-i18n="auto_trade">自动交易</span>
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="autoTradeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </label>
+                <div style="margin-top: 10px;">
+                    <label data-i18n="auto_trade_time">自动交易时间</label>
+                    <input type="time" id="autoTradeTime" value="09:00" style="margin-left: 10px;">
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="saveSettings()">
+                <span data-i18n="save_settings">保存设置</span>
+            </button>
+            <button class="btn btn-warning" onclick="resetPortfolio()" style="margin-left: 10px;">
+                <span data-i18n="reset_portfolio">重置投资组合</span>
+            </button>
+            
+            <h3 data-i18n="performance_stats">交易表现</h3>
+            <div class="performance-stats" id="performanceStats">
+                <!-- 动态生成 -->
+            </div>
+            
+            <h3 data-i18n="recent_trades">最近交易</h3>
+            <div class="trade-history" id="tradeHistory">
+                <!-- 动态生成 -->
+            </div>
+        </div>
+        
+        <!-- 数据更新部分 -->
+        <div class="section">
+            <h2 data-i18n="data_update">数据更新（通过API获取）</h2>
+            <div class="controls">
+                <button id="updateForexBtn" class="btn btn-primary">
+                    <span class="btn-icon">💱</span>
+                    <span data-i18n="update_forex">更新汇率和国债数据</span>
+                </button>
+                <div id="forexUpdateResult" class="result-box"></div>
+                
+                <div style="margin-top: 20px;">
+                    <input type="date" id="gdeltDateInput" class="date-input">
+                    <button id="updateGdeltBtn" class="btn btn-secondary">
+                        <span class="btn-icon">📰</span>
+                        <span data-i18n="update_gdelt">更新GDELT新闻数据</span>
+                    </button>
+                    <div id="gdeltUpdateResult" class="result-box"></div>
+                </div>
+            </div>
+            
+            <!-- 最新数据显示 -->
+            <div id="latestData" class="latest-data"></div>
+        </div>
+        
+        <!-- 预测部分 -->
+        <div class="section">
+            <h2 data-i18n="predict_trade">预测交易</h2>
+            <p class="currency-info" data-i18n="currency_pairs">货币对：USD_CNY, USD_GBP, CNY_USD, GBP_CNY, GBP_USD, CNY_GBP</p>
+            
+            <div class="controls">
+                <button id="predictBtn" class="btn btn-success">
+                    <span class="btn-icon">📈</span>
+                    <span data-i18n="predict_next">预测下一天</span>
+                </button>
+                
+                <div style="margin-top: 10px;">
+                    <label data-i18n="batch_days">批量预测天数：</label>
+                    <input type="number" id="daysInput" min="1" max="30" value="5" class="number-input">
+                    <button id="predictMultipleBtn" class="btn btn-info">
+                        <span class="btn-icon">📊</span>
+                        <span data-i18n="batch_predict">批量预测</span>
+                    </button>
+                </div>
+                
+                <button id="resetBtn" class="btn btn-warning">
+                    <span class="btn-icon">🔄</span>
+                    <span data-i18n="reset_history">重置预测历史</span>
+                </button>
+                
+                <!-- 手动输入数据按钮 -->
+                <button onclick="window.location.href='data_input.html'" class="btn btn-secondary" style="margin-top: 10px;">
+                    <span class="btn-icon">✏️</span>
+                    <span data-i18n="manual_input">手动输入历史数据</span>
+                </button>
+            </div>
+            
+            <!-- 预测统计 -->
+            <div id="predictionStats" class="stats-box"></div>
+            
+            <!-- 预测结果容器 -->
+            <div id="resultsContainer" class="results"></div>
+        </div>
+    </div>
+    
+    <script src="i18n.js"></script>
+    <script src="main.js"></script>
+    <script src="trading.js"></script>
+</body>
+</html>

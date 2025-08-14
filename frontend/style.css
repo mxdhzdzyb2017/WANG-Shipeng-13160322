@@ -1,0 +1,499 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background-color: #f5f5f7;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* 语言切换器样式 */
+.language-switcher {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 5px;
+}
+
+.lang-btn {
+    padding: 5px 15px;
+    border: 1px solid #ddd;
+    background: white;
+    color: #333;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.lang-btn:hover {
+    background: #f0f0f0;
+}
+
+.lang-btn.active {
+    background: #007AFF;
+    color: white;
+    border-color: #007AFF;
+}
+
+h1 {
+    text-align: center;
+    color: #1d1d1f;
+    margin-bottom: 30px;
+    font-size: 2.5em;
+}
+
+.section {
+    background: white;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.section h2 {
+    color: #1d1d1f;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    margin: 5px;
+}
+
+.btn-primary {
+    background: #007AFF;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0051D5;
+}
+
+.btn-secondary {
+    background: #5856D6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #3734AA;
+}
+
+.btn-success {
+    background: #34C759;
+    color: white;
+}
+
+.btn-success:hover {
+    background: #248A3D;
+}
+
+.btn-info {
+    background: #00C7BE;
+    color: white;
+}
+
+.btn-info:hover {
+    background: #00A098;
+}
+
+.btn-warning {
+    background: #FF9500;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: #CC7700;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    font-size: 1.2em;
+}
+
+/* 输入框样式 */
+.date-input, .number-input {
+    padding: 8px 12px;
+    border: 1px solid #d1d1d6;
+    border-radius: 6px;
+    font-size: 16px;
+    margin: 0 5px;
+}
+
+/* 状态区域 */
+.status-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.status-section h2 {
+    color: white;
+    border-bottom-color: rgba(255,255,255,0.3);
+}
+
+.status-info p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+/* 结果显示 */
+.result-box {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f8f9fa;
+}
+
+.success-box {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.success-box pre {
+    white-space: pre-wrap;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.error {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.info {
+    color: #0c5460;
+    background: #d1ecf1;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #bee5eb;
+}
+
+/* 最新数据显示 */
+.latest-data {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #e9ecef;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.data-item {
+    background: #f8f9fa;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: monospace;
+}
+
+/* 预测结果表格 */
+.prediction-result {
+    margin: 20px 0;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.prediction-result h3 {
+    color: #1d1d1f;
+    margin-bottom: 15px;
+}
+
+.prediction-result table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.prediction-result th {
+    background: #007AFF;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.prediction-result td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.prediction-result tr:last-child td {
+    border-bottom: none;
+}
+
+.prediction-result tr.correct {
+    background: #d4edda;
+}
+
+.prediction-result tr.incorrect {
+    background: #f8d7da;
+}
+
+.pred-1, .real-1 {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.pred-0, .real-0 {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.positive {
+    color: #28a745;
+}
+
+.negative {
+    color: #dc3545;
+}
+
+/* 统计显示 */
+.stats-box {
+    margin: 20px 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.stat-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.stat-item:hover {
+    transform: translateY(-2px);
+}
+
+.stat-item.good {
+    border-top: 3px solid #28a745;
+}
+
+.stat-item.medium {
+    border-top: 3px solid #ffc107;
+}
+
+.stat-item.poor {
+    border-top: 3px solid #dc3545;
+}
+
+.stat-name {
+    font-weight: bold;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.stat-value {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1d1d1f;
+}
+
+.stat-detail {
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .section {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .language-switcher {
+        position: static;
+        margin-bottom: 10px;
+        justify-content: center;
+    }
+    
+    .prediction-result table {
+        font-size: 14px;
+    }
+    
+    .prediction-result th,
+    .prediction-result td {
+        padding: 8px;
+    }
+    
+    .data-grid,
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* 在文件末尾添加以下样式 */
+.currency-holdings {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+}
+
+.currency-holdings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.currency-holding-item {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.currency-holding-item .currency-name {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.currency-holding-item .currency-amount {
+    display: block;
+    font-size: 20px;
+    color: #4ecdc4;
+}
+
+.allocation-item {
+    background: rgba(255,255,255,0.1);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.allocation-item.low-accuracy {
+    opacity: 0.6;
+    background: rgba(255,0,0,0.1);
+}
+
+.allocation-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.accuracy-badge {
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.accuracy-badge.good {
+    background: #4ecdc4;
+    color: white;
+}
+
+.accuracy-badge.medium {
+    background: #ffc107;
+    color: white;
+}
+
+.accuracy-badge.poor {
+    background: #ff6b6b;
+    color: white;
+}
+
+.warning-text {
+    color: #ff6b6b;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.allocation-hint {
+    color: rgba(255,255,255,0.8);
+    font-size: 14px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+}
+
+.reversed-badge {
+    background: #ff6b6b;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.accuracy-info {
+    color: #4ecdc4;
+    font-weight: bold;
+}
+
+#baseCurrency {
+    padding: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    width: 100%;
+}
+
+#baseCurrency option {
+    background: #333;
+    color: white;
+}
+
+/* 自动反向提示样式 */
+.allocation-item.auto-reverse {
+    background: rgba(255, 107, 107, 0.1);
+    border: 1px solid rgba(255, 107, 107, 0.3);
+}
+
+.auto-reverse .allocation-header {
+    color: #ff6b6b;
+}
